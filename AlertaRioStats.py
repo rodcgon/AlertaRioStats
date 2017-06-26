@@ -14,8 +14,9 @@ from lmoments3 import distr
 import time
 start_time = time.time()
 
-
+#-- mudar DIRS colocando o diretorio onde encontram-se os txt's do alertario
 DIRS = r'G:\Python_Projs\python3\alertario\sepetiba'
+#-- mudar a variavel posto com o prefixo do arquivo txt do alertario
 posto = 'sepetiba'
 
 #-- le a serie csv com data e prec. diaria
@@ -42,10 +43,10 @@ for ano in lstAnos:
 
 lstDFAnos = lstDFAnos.sort_values('Data')
 lstDFAnos = lstDFAnos.reset_index(drop=True)
-lstDFAnos = lstDFAnos.dropna()
-#tenta filtrar valores nAn
+lstDFAnos = lstDFAnos.dropna()  #-- filtra valores NaN - linhas sem medicoes de 15 minutos
 
-# Fazer mais acumulações que nao tem nos dados originais
+
+#-- Fazer as acumulações. Nao acreditei nos dados originais... Fiz a acumulação por mim mesmo.
 lstDFAnos['30 min'] = lstDFAnos['15 min'].rolling(window=2,center=False).sum().round(2)
 lstDFAnos['01 h'] = lstDFAnos['15 min'].rolling(window=4,center=False).sum().round(2)
 lstDFAnos['02 h'] = lstDFAnos['15 min'].rolling(window=8,center=False).sum().round(2)
